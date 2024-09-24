@@ -9,19 +9,22 @@ import React, { useEffect } from 'react'
 function Header() {
   const { user, isSignedIn } = useUser();
   const path = usePathname();
+  
   useEffect(() => {
     console.log(path)
-  }, [path]); // Ensure path is a dependency for re-running effect
+  }, [path]); 
+
+  const isSticky = path === '/' || path.includes('/dashboard');
 
   return !path.includes('aiform') && (
-    <div className='p-3 px-5 border-b shadow-sm' style={{
-      position: 'sticky',
-      top: 0,
-      zIndex: 1000,
-      backgroundColor: '#fff'  // Adjust the background color as needed
-    }}>
+    <div
+      className={`p-3 px-5 border-b shadow-sm ${isSticky ? 'sticky top-0' : ''}`}
+      style={{
+        zIndex: 1000,
+        backgroundColor: '#fff', 
+      }}
+    >
       <div className='flex items-center justify-between'>
-        {/* Updated Link usage */}
         <Link href="/">
           <Image src={'/logo.svg'} width={180} height={50} alt='logo' />
         </Link>
@@ -39,7 +42,7 @@ function Header() {
         )}
       </div>
     </div>
-  )
+  );
 }
 
 export default Header;
